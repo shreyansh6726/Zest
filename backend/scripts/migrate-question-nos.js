@@ -1,6 +1,6 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const TestContent = require('../models/TestContent');
+const TestContent = require('../src/models/TestContent');
 
 const MONGO_URI = process.env.MONGO_URI;
 

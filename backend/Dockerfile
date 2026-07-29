@@ -38,4 +38,4 @@ ENV NODE_ENV=production
 EXPOSE 8080
 
 # Start the application from the backend directory
-CMD ["node", "index.js"]
+CMD ["node", "server.js"]

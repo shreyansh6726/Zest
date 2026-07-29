@@ -1,5 +1,5 @@
 # Backend Structure
 
-This backend now exposes a `server.js` entrypoint and a `src/` layout scaffold for future separation of config, controllers, middleware, models, routes, services, utils, and validators.
+The backend uses `server.js` as its single runtime entry point. Express application setup and routes live in `src/app.js`, while database models live in `src/models/`.
 
-Current runtime behavior is still backed by the existing application logic in `index.js` so the server keeps working while the codebase is migrated into `src/` over time.
+One-off maintenance and diagnostic scripts live in `scripts/`.
