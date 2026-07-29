@@ -813,11 +813,21 @@ app.put('/api/auth/change-email', async (req, res) => {
         );
         if (!updated) return res.status(404).json({ message: 'User not found' });
 
+        const batch = updated.batchId ? await Batch.findById(updated.batchId) : null;
+
         // Clean up OTP
         await OTP.deleteMany({ email: currentEmail });
 
         console.log(`[Auth] Email changed from ${currentEmail} to ${newEmail}`);
-        res.json({ message: 'Email updated successfully', user: { name: updated.name, email: updated.emailID } });
+        res.json({
+            message: 'Email updated successfully',
+            user: {
+                name: updated.name,
+                email: updated.emailID,
+                batchId: updated.batchId || null,
+                batch: formatBatchForClient(batch)
+            }
+        });
 
     } catch (err) {
         res.status(500).json({ message: err.message });

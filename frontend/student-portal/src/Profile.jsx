@@ -16,6 +16,10 @@ const Profile = () => {
     // Load user from storage
     const initialUser = getAuthUser() || {};
     const [userData, setUserData] = useState({
+        // Keep the complete authenticated user object here. In particular,
+        // batchId/batch must survive profile updates or ProtectedRoute will
+        // treat the student as someone who has not selected a batch.
+        ...initialUser,
         name: initialUser.name || 'Anonymous User',
         email: initialUser.email || 'guest@zest.com',
         role: initialUser.role || 'Student',
@@ -153,7 +157,7 @@ const Profile = () => {
             if (!response.ok) throw new Error(data.message);
 
             if (modal.type === 'email' && data.user) {
-                const updatedUser = { ...userData, email: data.user.email };
+                const updatedUser = { ...userData, ...data.user, email: data.user.email };
                 setUserData(updatedUser);
                 const storageType = localStorage.getItem('user') ? localStorage : sessionStorage;
                 storageType.setItem('user', JSON.stringify(updatedUser));
